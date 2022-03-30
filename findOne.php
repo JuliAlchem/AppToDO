@@ -1,29 +1,10 @@
-<?php
-session_start();
 
-/*
-if(isset($_POST['submit'])){
-    require 'config.php';
-    
-   $result = $collection->find(
-    ['Name'=> 'julia'],
-    ['projection' => ['Name' => 1] ] // change this!
-   );
-   var_dump($result);   
-                             
-}
-*/
-
-if(isset($_POST['submit'])){
-    $_SESSION = array();
-    header("Location: showAll.php");
-}
-?>
 
 <!DOCTYPE html>
 <head>
     <link rel="stylesheet" href="Styles\index.css">
     <link rel="stylesheet" href="Styles\create.css">
+    <link rel="stylesheet" href="Styles\findOne.css">
     <link rel="stylesheet" 
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" 
     integrity="sha512-10/jx2EXwxxWqCLX/hHth/vu2KY3jCF70dCQB8TSgNjbCVAC/8vai53GfMDrO2Emgwccf2pJqxct9ehpzG+MTw==" 
@@ -51,14 +32,13 @@ if(isset($_POST['submit'])){
     <section>
     
             <strong>Search for Name:</strong><input type="search" name="Name" class="form-control" 
-            placeholder="Name">
+            placeholder="Name"
+            >
 
     </section>
 
         <br>
-       
-
-        
+            
         <div class='form-group text-center'>
             <button type="submit" name="submit" class="btn btn=success" 
             style='color: white; background-color:  #0d90c3; border: none; width: 150px; padding: 7px; border-radius: 5px;'
@@ -66,6 +46,44 @@ if(isset($_POST['submit'])){
         </div>
 
     </form>
+    <br>
+    <section>
+    <table class="table = table-hover">
+            <tr> 
+                <th>Name</th>    
+                <th>Surname</th>
+                <th>Email</th>
+                <th>Start</th>
+                <th>Task Description</th>
+                <th>Status</th>
+                <th>Finish</th>
+            </tr>
+            
+            <?php
+            if(isset($_POST['submit'])){
+                
+            require 'config.php';
+            $users = $collection->find(['Name'=>$_REQUEST['Name']]); 
+            foreach($users as $user) {
+
+                echo "<tr>";
+                echo "<td>".$user->Name."</td>";
+                echo "<td>".$user->Surname."</td>";
+                echo "<td>".$user->Email."</td>";
+                echo "<td>".$user->Start."</td>";
+                echo "<td>".$user->Description."</td>";
+                echo "<td>".$user->Status."</td>";
+                echo "<td>".$user->Finish."</td>";
+                echo "<td class='aside'>";
+                echo "<a href='edit.php?id=".$user->_id."' class='fa fa-edit' style='padding: 5px;'></a>";
+                echo "<a href='delete.php?id=".$user->_id."' class='fa fa-trash' style='padding: 5px;'></a>";
+                echo "</td>";
+                echo "</tr>";
+            } }
+            ?>
+        </table>
+
+    </section>
 </main>
 
     <footer>

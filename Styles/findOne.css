@@ -1,0 +1,11 @@
+main {
+    display: flex;
+	flex-direction: column;
+      
+}
+
+section{
+    width: 700px;
+    margin: 20px auto;
+}
+
